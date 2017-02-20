@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+#   db:
+# #    image: postgres
+#     image: billdqu/postgresql
+#     ports:
+#       - "5432:5432"
+#     container_name: db_mysql
+  backend:
+    # build:
+      # context: .
+      # dockerfile: Dockerfile
+    image: eps:v0.2
+    command: /code/boot.sh
+    volumes:
+      - ./backend/code/:/code/
+      - ./frontend/:/var/www/eps/
+    ports:
+      - "8000:80"
+      - "8080:8080"
+    # depends_on:
+      # - db
+    container_name: backend
+
+
+

@@ -25,20 +25,25 @@ ADD ./config/eps.conf /etc/nginx/sites-enabled/eps.conf
 # In final version, we will do copy, but in dev, we use -v
 # ADD ./frontend /var/www/eps/
 
-# Start nginx
-RUN service nginx restart
+
 
 # Install Python and Basic Python Tools
 RUN apt-get install -y build-essential python python-dev python-distribute python-pip
 RUN pip install --upgrade pip 
 
 # Add the files
-#ADD ./config/requirements.txt /
-#RUN pip install -r requirements.txt
+ADD ./config/requirements.txt /
+RUN pip install -r requirements.txt
 
 # Copy backend files
 # In final version, we will do copy, but in dev, we use -v
-#ADD ./backend/code /code
+# ADD ./backend/code /code
 
-# Define the command which runs when the container starts
-CMD ["service nginx start"]
+# Start nginx
+# RUN service nginx restart
+
+# load uwsgi ini file
+# RUN uwsgi --ini /code/flaskapp_uwsgi.ini
+
+# Use bash as the container's entry point
+ENTRYPOINT ["/bin/bash", "-c"]
