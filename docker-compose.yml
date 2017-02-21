@@ -5,6 +5,7 @@ services:
     image: mysql
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_DATABASE=eps
     ports:
       - "3306:3306"
     container_name: db_mysql
