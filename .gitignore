@@ -1,5 +1,6 @@
 # Built application files
 build/
+*.pyc
 
 # Local configuration file (sdk path, etc)
 local.properties
