@@ -1,12 +1,13 @@
 version: '3'
 
 services:
-#   db:
-# #    image: postgres
-#     image: billdqu/postgresql
-#     ports:
-#       - "5432:5432"
-#     container_name: db_mysql
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    ports:
+      - "3306:3306"
+    container_name: db_mysql
   backend:
     build:
       context: .
@@ -19,8 +20,8 @@ services:
     ports:
       - "8000:80"
       - "8080:8080"
-    # depends_on:
-      # - db
+    depends_on:
+      - db
     container_name: backend
 
 
