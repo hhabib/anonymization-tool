@@ -28,11 +28,12 @@ Docker-compose Installation Instruction: [here](https://docs.docker.com/compose/
 │       ├── flaskapp_uwsgi.ini		    # uwsgi Configure for Flask 
 │       ├── log			 				# Backend Logs Folder
 │       └── server.py 					# Flask Backend web server
+├── dataset				 # Folder to put csv dataset
 ├── config				 # Configuration folder
 │   ├── eps.conf						# Configuration file for nginx
 │   └── requirements.txt  				# Python Requirements file  
 ├── docker-compose.yml   # Docker compose configuration file
-├── frontend
+├── frontend			 # Frontend Folder
 │   ├── 404.html
 │   ├── apple-touch-icon.png
 │   ├── browserconfig.xml
