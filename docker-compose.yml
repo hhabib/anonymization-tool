@@ -18,6 +18,7 @@ services:
     volumes:
       - ./backend/code/:/code/
       - ./frontend/:/var/www/eps/
+      - ./dataset/:/dataset/
     ports:
       - "8000:80"
       - "8080:8080"
