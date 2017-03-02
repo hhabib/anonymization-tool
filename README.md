@@ -31,7 +31,7 @@ Docker-compose Installation Instruction: [here](https://docs.docker.com/compose/
 ├── config				 # Configuration folder
 │   ├── eps.conf						# Configuration file for nginx
 │   └── requirements.txt  				# Python Requirements file  
-├── docker-compose.yml
+├── docker-compose.yml   # Docker compose configuration file
 ├── frontend
 │   ├── 404.html
 │   ├── apple-touch-icon.png
