@@ -1,21 +1,23 @@
 # Anonymization Tool
-An Open-source Dataset Anonymization Tool
+An open-source Dataset Anonymization Tool
 
 # How to Run Our Tool
 ### 1. Docker Compose Installation
-1. Make Sure Docker is installed in your computer/server 
-Docker Installation Instruction: [here](https://docs.docker.com/engine/installation/).
+Make sure Docker is installed on your computer/server 
+Docker Installation Instructions: [here](https://docs.docker.com/engine/installation/).
 
-2. If you are a Mac or Window user:
-you are done! you already have docker compose installed along with your docker.
+*Operating Systems: 
+1. If you are a Mac or Windows user:
+You are done! Docker compose in already installed along with your docker.
 
-3. If you are a Linux user：
+2. If you are a Linux user：
 Docker-compose Installation Instruction: [here](https://docs.docker.com/compose/install/). (Only for Linux User)
 
 ### 2. Launch Our Tool
 1. Make sure you have docker-compose installed
-2. Download the code from our github repo.
-3. Go the the directory with `docker-compose.yml`, run `docker-compose up`. Note that the first time of running this command would take several minutes to build the image. But it would be quite fast after the first build.
+2. Download the code from our github repository 
+3. Go the the directory with `docker-compose.yml`, run `docker-compose up`
+     -Note that the initial attempt of running this command will take several minutes to build the image. After the first build, it will be faster.
 4. Visit our tool at `localhost:8000` with your browser.
 
 # Repository Directory
