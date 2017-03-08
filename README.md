@@ -7,15 +7,17 @@ Make sure Docker is installed on your computer/server
 Docker Installation Instructions: [here](https://docs.docker.com/engine/installation/).
 
 *Operating Systems: 
-1. If you are a Mac or Windows user: You are done! Docker compose in already installed along with your docker.
+1. If you are a Mac or Windows user: 
+ You are done! Docker compose in already installed along with your docker.
 
-2. If you are a Linux user： Docker-compose Installation Instruction: [here](https://docs.docker.com/compose/install/). (Only for Linux User)
+2. If you are a Linux user： 
+ Docker-compose Installation Instruction: [here](https://docs.docker.com/compose/install/). (Only for Linux User)
 
 ### 2. Launch Our Tool
 1. Make sure you have docker-compose installed
 2. Download the code from our github repository 
 3. Go the the directory with `docker-compose.yml`, run `docker-compose up`
-Note that the initial attempt of running this command will take several minutes to build the image. After the first build, it will be faster.
+     Note that the initial attempt of running this command will take several minutes to build the image. After the first build, it will be faster.
 4. Visit our tool at `localhost:8000` with your browser.
 
 # Repository Directory
