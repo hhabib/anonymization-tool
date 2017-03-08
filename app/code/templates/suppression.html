@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block body %}
+<!--     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Suppress Columns</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+=
+
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    </head> -->
+    <body>
+        <h1> Suppress Columns</h1>
+        <p> Select which attributes you would like to be suppressed from the dataset. To learn more about suppression, visit our <a href='./tutorials.html'>Tutorials page</a>.</p>
+        <script type="text/javascript">  
+
+        //Retrieve stored attributes from backend.
+        var attributes = [];
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+        $.getJSON($SCRIPT_ROOT + '/_python2array', function(data){
+            attributes = data.result
+            console.log(attributes)
+        });
+
+        </script>
+
+{% endblock %}

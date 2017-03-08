@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1>Welcome!</h1>
+  <p>Click "Get Started" to import your data or "Tutorials" to learn how to use this tool to anonymize your dataset.</p>
+  <button type="button" onclick="window.location.href='./import.html'">Get Started</button>
+  <button type="button" onclick="window.location.href='./tutorials.html'">Tutorials</button>
+
+  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>
+{% endblock %}

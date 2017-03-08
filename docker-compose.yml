@@ -16,8 +16,8 @@ services:
     image: eps:v0.2
     command: /code/boot.sh
     volumes:
-      - ./backend/code/:/code/
-      - ./frontend/:/var/www/eps/
+      - ./app/code/:/code/
+      # - ./frontend/:/var/www/eps/
       - ./dataset/:/dataset/
     ports:
       - "8000:80"
