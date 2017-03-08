@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+   
     </head>
     <body>
         <h1> Import Dataset </h1>
@@ -30,7 +31,7 @@
             <!-- </button> -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
-    
+          
             <script type="text/javascript">  
                 $(document).ready(function() {
 
@@ -62,6 +63,14 @@
                                 data = $.csv.toArrays(csvData);
                                 attributes = data[0];
                                 console.log('Attributes: ' + attributes.toString());
+                                $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+                                $.getJSON($SCRIPT_ROOT + '/_array2python', {
+                                    attributes: attributes
+                                    //wordlist: list.toString()
+                                }, function(data){
+                                    console.log(data.result)
+                                    //$( "#result" ).text(data.result);
+                                });
                                 if (data && data.length > 0) {
                                   console.log('Imported -' + data.length + '- rows successfully!');
                                 } else {
