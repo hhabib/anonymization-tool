@@ -17,7 +17,7 @@ Docker-compose Installation Instruction: [here](https://docs.docker.com/compose/
 1. Make sure you have docker-compose installed
 2. Download the code from our github repository 
 3. Go the the directory with `docker-compose.yml`, run `docker-compose up`
-     -Note that the initial attempt of running this command will take several minutes to build the image. After the first build, it will be faster.
+Note that the initial attempt of running this command will take several minutes to build the image. After the first build, it will be faster.
 4. Visit our tool at `localhost:8000` with your browser.
 
 # Repository Directory
