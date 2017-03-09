@@ -6,7 +6,7 @@ An open-source Dataset Anonymization Tool
 NOTE: Docker is required for this tool.    
 Docker Installation Instructions: [here](https://docs.docker.com/engine/installation/).  
 
-*Operating Systems
+*Operating Systems    
 1. If you are a Mac or Windows user:  
 You are done! Docker compose in already installed along with your docker.  
 2. If you are a Linux user:  
