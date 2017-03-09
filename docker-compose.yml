@@ -13,14 +13,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: eps:v0.2
+    image: eps:v0.3
     command: /code/boot.sh
     volumes:
       - ./app/code/:/code/
       # - ./frontend/:/var/www/eps/
       - ./dataset/:/dataset/
     ports:
-      - "8000:80"
+      - "8000:8000"
       - "8080:8080"
     depends_on:
       - db

@@ -9,17 +9,16 @@ FROM ubuntu:16.04
 RUN apt-get update
 
 # Install necessary tools
-#RUN apt-get install -y tar git curl vim wget dialog net-tools 
 RUN apt-get install -y vim curl
 
 # Download and Install Nginx
-RUN apt-get install -y nginx  
+#RUN apt-get install -y nginx  
 
 # Remove the default Nginx configuration file
-RUN rm -v /etc/nginx/sites-enabled/*
+#RUN rm -v /etc/nginx/sites-enabled/*
 
 # Copy a configuration file from the current directory
-ADD ./config/eps.conf /etc/nginx/sites-enabled/eps.conf
+#ADD ./config/eps.conf /etc/nginx/sites-enabled/eps.conf
 
 # Copy frontend files
 # In final version, we will do copy, but in dev, we use -v
