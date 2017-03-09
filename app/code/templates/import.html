@@ -52,6 +52,21 @@
                 } else {
                         var data = null;
                         var file = evt.target.files[0];
+
+                        // Ajax Post the file to the backend
+                        var formData = new FormData();
+                        formData.append('file', file);
+                        $.ajax({
+                               url : '/postcsv',
+                               type : 'POST',
+                               data : formData,
+                               processData: false,  // tell jQuery not to process the data
+                               contentType: false,  // tell jQuery not to set contentType
+                               success : function(data) {
+                                   console.log(data);
+                               }
+                        });
+
                         var attributes = null;
                         var reader = new FileReader();
                         reader.readAsText(file);
