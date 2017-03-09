@@ -7,7 +7,6 @@ from flask import redirect
 app = Flask(__name__)
 app.secret_key = 'anonymizationtoolkey'
 app.config['UPLOAD_FOLDER'] = '/dataset'
-# app.config['UPLOAD_FOLDER'] = '/Users/Billdqu/drive/classes/08605EPS/prj/at/anonymization-tool/dataset'
 # dataset_attributes = []
  
 @app.route('/_array2python')
