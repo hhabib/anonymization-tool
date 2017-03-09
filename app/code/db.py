@@ -13,7 +13,7 @@ mysql.import_csv(csv_path, db_name)
 
 class Mysql:
     def __init__(self):
-        self.connection = pymysql.connect(host="localhost", user="root", passwd="", db="eps", local_infile=True)
+        self.connection = pymysql.connect(host="db", user="root", passwd="", db="eps", local_infile=True)
 
     def __del__(self):
         self.connection.close()
@@ -72,4 +72,3 @@ class Mysql:
         sql = "load data local infile '{0}' into table {1} columns terminated by ','"\
         "LINES TERMINATED BY '\n' IGNORE 1 LINES;".format(path, db_name)
         self.exec_sql(sql)
-
