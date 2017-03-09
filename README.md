@@ -3,13 +3,12 @@ An open-source Dataset Anonymization Tool
 
 # How to Run Our Tool
 ### 1. Docker Compose Installation
-NOTE: Docker is required for this tool.    
+NOTE: Docker must be installed on your computer/server for this tool.    
 Docker Installation Instructions: [here](https://docs.docker.com/engine/installation/).  
 
 *Operating Systems    
 1. If you are a Mac or Windows user:  
-You are done! Docker compose in already installed along with your docker.
-
+You are done! Docker compose in already installed along with your docker.  
 2. If you are a Linux user:  
 Docker-compose Installation Instruction: [here](https://docs.docker.com/compose/install/). (Only for Linux User)  
 
