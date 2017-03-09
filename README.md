@@ -21,39 +21,24 @@ Note that the initial attempt of running this command will take several minutes 
 
 # Repository Directory
 ```
-├── Dockerfile           # Docker configuration file.
-├── backend				 # Backend Folder
-│   └── code					# Backend code folder
-│       ├── boot.sh						# boot script of backend container
-│       ├── db.py		 				# Database interfaces
-│       ├── flaskapp_uwsgi.ini		    # uwsgi Configure for Flask 
-│       ├── log			 				# Backend Logs Folder
-│       └── server.py 					# Flask Backend web server
-├── dataset				 # Folder to put csv dataset
-├── config				 # Configuration folder
-│   ├── eps.conf						# Configuration file for nginx
-│   └── requirements.txt  				# Python Requirements file  
-├── docker-compose.yml   # Docker compose configuration file
-├── frontend			 # Frontend Folder
-│   ├── 404.html
-│   ├── apple-touch-icon.png
-│   ├── browserconfig.xml
-│   ├── crossdomain.xml
-│   ├── css
-│   ├── doc
-│   ├── favicon.ico
-│   ├── humans.txt
-│   ├── img
-│   ├── import.html
-│   ├── index.html
-│   ├── js
-│   │   ├── main.js
-│   │   ├── plugins.js
-│   │   └── vendor
-│   │       ├── jquery-1.12.0.min.js
-│   │       └── modernizr-2.8.3.min.js
-│   ├── tile-wide.png
-│   ├── tile.png
-│   └── tutorials.html
-└── robots.txt
+├── Dockerfile          # Docker configuration file.
+├── LICENSE.txt         # License
+├── README.md           # README File
+├── app                 # Flask App Folder
+│   └── code            
+│       ├── boot.sh             # boot script of backend container
+│       ├── db.py               # Database interfaces
+│       ├── flaskapp_uwsgi.ini  # uwsgi Configure for Flask 
+│       ├── log                 # Backend Logs Folder
+│       ├── server.py           # Flask Backend web server
+│       └── templates           # Frontend Files
+├── config              # Configuration folder
+│   ├── eps.conf                # Configuration file for nginx
+│   └── requirements.txt        # Python Requirements file  
+├── dataset         # Folder to put csv dataset
+├── docker-compose.yml      # Docker compose configuration file
+└── robots.txt      # Robot rule
+
+
+
 ```
