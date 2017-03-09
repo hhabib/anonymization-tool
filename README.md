@@ -9,7 +9,7 @@ Docker Installation Instructions: [here](https://docs.docker.com/engine/installa
 
 *Operating Systems:  
 1. If you are a Mac or Windows user:  
-You are done! Docker compose in already installed along with your docker.  
+You are done! Docker compose in already installed along with your docker.
 
 
 2. If you are a Linux user:  
