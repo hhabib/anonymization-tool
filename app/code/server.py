@@ -18,6 +18,13 @@ def array2python():
     attributes = session['dataset_attributes']
     return jsonify(result=attributes)
 
+@app.route('/_suppression2python')
+def suppression2python():
+    session['suppression_attributes'] = json.loads(request.args.get('suppressedAttr'))
+    suppressedAttr = session['suppression_attributes']
+    print "I was called!"
+    return jsonify(result=suppressedAttr)
+
 
 @app.route('/_python2array')
 def python2array():

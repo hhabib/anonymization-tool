@@ -32,7 +32,7 @@
             var html = '<form>';
             for(var attr in attributes) {
                 html += '<tr>\r\n';
-                html += '<td>' + attributes[attr] + '</td>\r\n' + '<td>suppresss last <input type=\"text\" name=\"' + attributes[attr] +'\"> characters </td>\r\n' + '<td><input type=\"checkbox\" name=\"suppress_all\" value=\'all' + attributes[attr] + '\'> suppress all characters </td>\r\n</td>\r\n';
+                html += '<td>' + attributes[attr] + '</td>\r\n' + '<td>suppresss last <input type=\"text\" id=\"' + attributes[attr] +'\"> characters </td>\r\n' + '<td><input type=\"checkbox\" name=\"suppress_all\" id=\'all' + attributes[attr] + '\'> suppress all characters </td>\r\n</td>\r\n';
 
                 html += '</tr>\r\n' ;
             }
@@ -40,9 +40,38 @@
             console.log(html);
             $('#contents').html(html);
             // Add next button
-            $('#next').html('<button type=\"button\" onclick=\"window.location.href=\'./suppression.html\'\">Next</button>');
+            $('#next').html('<button type=\"button\" onclick=\"submit()\">Next</button>');
             console.log(attributes)
         });
+
+        // Pass user input to backend
+        function submit() { 
+            var suppressedAttr = {};
+            for(var attr in attributes) {
+                var boxID = "all" + attributes[attr];
+
+                if(document.getElementById(boxID).checked || $('#'+ attributes[attr]).val() != "") {
+                    var key = attributes[attr];
+                    var value = "";
+                    if($('#'+ attributes[attr]).val() > 0) {
+                        value = $('#'+ attributes[attr]).val();
+                    } 
+                    if (document.getElementById(boxID).checked) {
+                        value = "all";
+                    }
+                    suppressedAttr.key = value;
+                    console.log("key: " + key);
+                    console.log("value: " + value);
+                }
+            }
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+            $.getJSON($SCRIPT_ROOT + '/_suppression2python', {
+                suppressedAttr: JSON.stringify(suppressedAttr)
+
+            }, function(data){
+                console.log(data.result)
+            });
+        }
 
         </script>
 
