@@ -1,26 +1,42 @@
 {% extends "layout.html" %}
+
 {% block body %}
-<!--     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Suppress Columns</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-=
-
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.8.3.min.js"></script>
-    </head> -->
-    <body>
-        <h1> Suppress Columns</h1>
-        <p> Select which attributes you would like to be suppressed in the dataset. To learn more about suppression, visit our <a href='./tutorials.html'>Tutorials page</a>.</p>
-        <table id="contents" style="width:100%; height:400px;" border></table>
-        <div id="next">
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="./">Anonymization Tool</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="./"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-book"></span> Tutorials</a></li>
+                </ul>
+            </div>
+        </nav>
+        <ul class="nav nav-pills nav-justified">
+            <li><a href="./import.html"><span class="glyphicon glyphicon-upload"></span> Import Dataset</a></li>
+            <li class="active"><a href="./suppression.html"><span class="glyphicon glyphicon-eye-close"></span> Anonymize Attributes</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Preview Dataset</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-download"></span> Export Dataset</a></li>
+        </ul>
+    
+         <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">Anonymize Dataset</div>
+                <div class="panel-body">
+                    <p> Select which attributes you would like to anonymize in the dataset. To learn more, visit our <a href='./tutorials.html'>Tutorials page</a>.</p>
+                    <br>
+                    <table id="contents" class="table"></table>
+                    <div id="navigation"></div>
+                </div>
+            </div>
         </div>
-        <script type="text/javascript">  
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+    <script type="text/javascript">  
 
         //Retrieve stored attributes from backend.
         var attributes = [];
@@ -29,18 +45,18 @@
             attributes = data.result
 
             // Print attributes
-            var html = '<form>';
+            var html = '<form><tbody>';
             for(var attr in attributes) {
                 html += '<tr>\r\n';
                 html += '<td>' + attributes[attr] + '</td>\r\n' + '<td>suppresss last <input type=\"text\" id=\"' + attributes[attr] +'\"> characters </td>\r\n' + '<td><input type=\"checkbox\" name=\"suppress_all\" id=\'all' + attributes[attr] + '\'> suppress all characters </td>\r\n</td>\r\n';
 
                 html += '</tr>\r\n' ;
             }
-            html += '</form>'
+            html += '</tbody></form>'
             console.log(html);
             $('#contents').html(html);
             // Add next button
-            $('#next').html('<button type=\"button\" onclick=\"submit()\">Next</button>');
+            $('#navigation').html('<ul class=\"pager\"><li class=\"previous\"><a href=\"./import.html\">Back</a></li><li class=\"next\"><a href=\"./suppression.html\">Next</a></li></ul>');
             console.log(attributes)
         });
 
