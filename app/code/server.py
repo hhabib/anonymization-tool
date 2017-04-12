@@ -60,9 +60,9 @@ def importpage():
     return render_template('import.html')
 
 
-@app.route('/suppression.html')
+@app.route('/anonymize.html')
 def suppression():
-    return render_template('suppression.html')
+    return render_template('anonymize.html')
 
 
 @app.route('/postcsv', methods=['POST'])
