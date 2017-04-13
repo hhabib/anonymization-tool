@@ -18,29 +18,11 @@ def array2python():
     attributes = session['dataset_attributes']
     return jsonify(result=attributes)
 
-@app.route('/_suppression2python')
-def suppression2python():
-    session['suppression_attributes'] = json.loads(request.args.get('suppressedAttr'))
-    suppressedAttr = session['suppression_attributes']
-    index2suppress()
-    return jsonify(result=suppressedAttr)
-
-# Returns a python dictionary, suppress{column number of attribute: number of characters to suppress}. Value of number of characters to suppress is either "all" or a number
-@app.route('/_index2suppress')
-def index2suppress():
-    suppressedAttr = session.get('suppression_attributes', None)
-    attributes = session.get('dataset_attributes', None)
-    i = len(suppressedAttr)
-    j = 1
-    suppress = {}
-    
-    for key in suppressedAttr:
-        colNum = attributes.index(key)
-        value = suppressedAttr[key]
-        suppress[colNum] = value
-    # print suppress
-    return suppress
-        
+@app.route('/_categorization2python')
+def categorization2python():
+    session['attributes_categorization'] = json.loads(request.args.get('attrCategorization'))
+    attrCategorization = session['attributes_categorization']
+    return jsonify(result=attrCategorization)
 
 
 @app.route('/_python2array')

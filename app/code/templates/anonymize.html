@@ -21,25 +21,13 @@
             <li><a href="#"><span class="glyphicon glyphicon-download"></span> Export Dataset</a></li>
         </ul>
         <div class="page-header">
-            <h1>Annonymize Attributes</h1>
+            <h1>2. Annonymize Attributes</h1>
         </div>
         <div class="panel-group">
             <div class="panel panel-primary">
-                <div class="panel-heading">Which database attributes are identifying?</div>
+                <div class="panel-heading">Categorize each attribute as identifying, insensitive, or sensitive.</div>
                 <div class="panel-body">
-                    <div class="form-group attrList"></div>
-                </div>
-            </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">Which database attributes are insensitive?</div>
-                <div class="panel-body">
-                    <div class="form-group attrList"></div>
-                </div>
-            </div>
-            <div class="panel panel-primary">
-                <div class="panel-heading">Which database attributes are sensitive?</div>
-                <div class="panel-body">
-                    <div class="form-group attrList"></div>
+                    <div class="form-group" id="attrList"></div>
                 </div>
             </div>
             <div class="panel panel-primary">
@@ -47,16 +35,16 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <select class="form-control" id="klevel" style="width: 100px">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
+                            <option value ="1">1</option>
+                            <option value ="2">2</option>
+                            <option value ="3">3</option>
+                            <option value ="4">4</option>
+                            <option value ="5">5</option>
+                            <option value ="6">6</option>
+                            <option value ="7">7</option>
+                            <option value ="8">8</option>
+                            <option value ="9">9</option>
+                            <option value ="10">10</option>
                         </select>
                     </div>
                 </div>
@@ -74,46 +62,58 @@
         var attributes = [];
         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
         $.getJSON($SCRIPT_ROOT + '/_python2array', function(data){
-            attributes = data.result
+            attributes = data.result;
 
             // Print attributes
-            var html = '';
+            var html = '<form><tbody>';
+      
             for(var attr in attributes) {
-                html += '<div class=\"checkbox\">\r\n';
-                html += '<label><input type=\"checkbox\" value=\"\">' + attributes[attr] + '</label>\r\n</div>';
+                html += '<tr>\r\n';
+                html += '<td>' + attributes[attr] + '</td>\r\n<td><select class=\"form-control\" id=\"' + attributes[attr] + '\" style=\"width: 300px\">\r\n<option value=\"identifying\">Identifying</option>\r\n<option value=\"sensitive\">Sensitive</option>\r\n<option value=\"insensitive\">Insensitive</option></select></td>\r\n';
+                html += '</tr>\r\n<br>';
             }
+            html += '</tbody></form>';
         
             console.log(html);
-            $('.attrList').html(html);
+            $('#attrList').html(html);
             // Add next button
-            $('#navigation').html('<ul class=\"pager\"><li class=\"previous\"><a href=\"./import.html\">Back</a></li><li class=\"next\"><a href=\"./suppression.html\">Next</a></li></ul>');
+            $('#navigation').html('<ul class=\"pager\"><li class=\"previous\"><a href=\"./import.html\">Back</a></li><li class=\"next\"><a href=\"\" onclick=\"submit()\">Next</a></li></ul>');
             console.log(attributes)
          });
 
         // Pass user input to backend
         function submit() { 
-            var suppressedAttr = {};
-            for(var attr in attributes) {
-                var boxID = "all" + attributes[attr];
+            var attrCategorization = {};
+            var identifyingAttr = [];
+            var sensitiveAttr = [];
+            var insensitiveAttr = [];
+            var klevel = document.getElementById("klevel").value;
+            for (var attr in attributes) {
+                var selection = document.getElementById(attributes[attr]).value;
+                
+                if (selection == 'identifying') {
+                    identifyingAttr.push(attributes[attr]);
+                } 
 
-                if(document.getElementById(boxID).checked || $('#'+ attributes[attr]).val() != "") {
-                    var key = attributes[attr];
-                    var value = "";
-                    if($('#'+ attributes[attr]).val() > 0) {
-                        value = $('#'+ attributes[attr]).val();
-                    } 
-                    if (document.getElementById(boxID).checked) {
-                        value = "all";
-                    }
-                    suppressedAttr[key] = value;
-                    console.log("key: " + key);
-                    console.log("value: " + value);
+                if (selection == 'sensitive') {
+                    sensitiveAttr.push(attributes[attr]);
+                }
+
+                if (selection == 'insensitive') {
+                    insensitiveAttr.push(attributes[attr]);
                 }
             }
-            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-            $.getJSON($SCRIPT_ROOT + '/_suppression2python', {
-                suppressedAttr: JSON.stringify(suppressedAttr)
 
+            attrCategorization["identifying"] = identifyingAttr;
+            attrCategorization["sensitive"] = sensitiveAttr;
+            attrCategorization["insensitive"] = insensitiveAttr;
+            attrCategorization["k"] = klevel;
+
+            console.log(klevel);
+
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+            $.getJSON($SCRIPT_ROOT + '/_categorization2python', {
+                attrCategorization: JSON.stringify(attrCategorization)
             }, function(data){
                 console.log(data.result)
             });
