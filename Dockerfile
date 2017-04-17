@@ -30,6 +30,9 @@ RUN apt-get install -y vim curl
 RUN apt-get install -y build-essential python python-dev python-distribute python-pip
 RUN pip install --upgrade pip 
 
+# Install Java
+RUN apt-get install -y default-jdk
+
 # Add the files
 ADD ./config/requirements.txt /
 RUN pip install -r requirements.txt

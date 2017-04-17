@@ -13,7 +13,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: eps:v0.3
+    image: eps:v0.4
     command: /code/boot.sh
     volumes:
       - ./app/code/:/code/
