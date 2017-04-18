@@ -8,9 +8,7 @@ import k_anon
 
 app = Flask(__name__)
 app.secret_key = 'anonymizationtoolkey'
-# app.config['UPLOAD_FOLDER'] = '/Users/Billdqu/drive/classes/08605EPS/prj/at/anonymization-tool/dataset'
 app.config['UPLOAD_FOLDER'] = '/dataset'
-# app.config['CONF_FOLDER'] = '/Users/Billdqu/drive/classes/08605EPS/prj/at/anonymization-tool/app/code/arx'
 app.config['CONF_FOLDER'] = '/code/arx'
 app.config['ori_db_name'] = 'db1'
 app.config['ano_db_name'] = 'db2'
@@ -24,10 +22,26 @@ def array2python():
 
 @app.route('/_categorization2python')
 def categorization2python():
-    session['attributes_categorization'] = json.loads(request.args.get('attrCategorization'))
-    attrCategorization = session['attributes_categorization']
-    return jsonify(result=attrCategorization)
+    if 'attrCategorization' not in request.args:
+        flash('No attrCategorization')
+        return redirect(request.url)
+    if not session.get('ori_dataset_path', None):
+        flash("Not dataset is set")
+        return redirect(request.url)
 
+    conf = json.loads(request.args.get('attrCategorization'))
+    conf_path = os.path.join(app.config['CONF_FOLDER'], "conf.json")
+    with open(conf_path, 'w') as outfile:
+        json.dump(conf, outfile)
+    session['conf_path'] = conf_path
+
+    ori_dataset_path = session.get('ori_dataset_path')
+    anon_dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], "anon.csv")
+
+    k_anon.k_anonymity(ori_dataset_path, conf_path, anon_dataset_path)
+    session['anon_dataset_path'] = anon_dataset_path
+
+    return ""
 
 @app.route('/_python2array')
 def python2array():

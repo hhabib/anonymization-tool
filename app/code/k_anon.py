@@ -3,29 +3,26 @@ import subprocess
 '''
 K-Anonymity Configuration File Format:
 Json file contains:
-"<Column name>": <AttributeType>
+"<AttributeType>":[<Column name1>,<Column name2>]
 
 AttributeType includes:
-1. Sensitive: This column will be suppressed completely
-2. Insensitive: Nothing will be done to this column
-3. Identifying: This will be anonymized by k-anonymity algorithm
-4. Identifying-Age: Specifiy that this column is age and identifying
-5. Identifying-Zip: Specifiy that this column is zip and identifying
+1. sensitive: This column will be suppressed completely
+2. insensitive: Nothing will be done to this column
+3. identifying: This will be anonymized by k-anonymity algorithm
+4. age: Specifiy that this column is age and identifying
+5. zip: Specifiy that this column is zip and identifying
 
 If a column is not mentioned in the configuration file,
 it will be seen as sensitive by the algorithm
 
 example:
 {
-    "Death Date": "Insensitive",
-    "Manner of Death": "Identifying",
-    "Age": "Identifying-Age",
-    "Sex": "Identifying",
-    "Race": "Identifying",
-    "Case Dispo": "Identifying",
-    "Incident Zip": "Identifying-Zip",
-    "Decedent Zip": "Identifying-Zip",
-    "Case Year": "Identifying",
+    "insensitive": [column name1, column name2, column name3],
+    "sensitive": [column name4, column name5],
+    "identifying": [column name6, column name7, column name8],
+    "age": [column name9],
+    "zip": [column name10],
+    "k": 5
 }
 
 '''
@@ -36,13 +33,13 @@ def __subprocess_cmd(command):
     print proc_stdout
 
 
-def k_anonymity(src_path, k, conf_path, dest_path):
+def k_anonymity(src_path, conf_path, dest_path):
     cmd = """
     cd arx
     javac -cp libarx-3.5.1.jar:json-simple-1.1.1.jar Anonymity.java
-    java -cp libarx-3.5.1.jar:json-simple-1.1.1.jar:. Anonymity {} {} {} {}
+    java -cp libarx-3.5.1.jar:json-simple-1.1.1.jar:. Anonymity {} {} {}
     rm ./*.class
     rm ./*.json
-    """.format(src_path, k, conf_path, dest_path)
+    """.format(src_path, conf_path, dest_path)
     __subprocess_cmd(cmd)
 
