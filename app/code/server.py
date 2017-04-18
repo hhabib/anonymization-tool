@@ -8,10 +8,8 @@ import k_anon
 
 app = Flask(__name__)
 app.secret_key = 'anonymizationtoolkey'
-# app.config['UPLOAD_FOLDER'] = '/dataset'
-app.config['UPLOAD_FOLDER'] = '/Users/Billdqu/drive/classes/08605EPS/prj/at/anonymization-tool/dataset'
-# app.config['CONF_FOLDER'] = '/code/arx'
-app.config['CONF_FOLDER'] = '/Users/Billdqu/drive/classes/08605EPS/prj/at/anonymization-tool/app/code/arx'
+app.config['UPLOAD_FOLDER'] = '/dataset'
+app.config['CONF_FOLDER'] = '/code/arx'
 app.config['ori_db_name'] = 'db1'
 app.config['ano_db_name'] = 'db2'
 ori_dataset_path = None
