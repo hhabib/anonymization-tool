@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.deidentifier.arx.ARXAnonymizer;
@@ -21,7 +20,7 @@ import org.deidentifier.arx.aggregates.HierarchyBuilderRedactionBased.Order;
 import org.deidentifier.arx.criteria.KAnonymity;
 import org.deidentifier.arx.aggregates.HierarchyBuilderIntervalBased.Range;
 
-import cern.colt.Arrays;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -31,27 +30,25 @@ public class Anonymity {
     @SuppressWarnings("deprecation")
     public static void main(String[] args) throws IOException {
         // args 0: original dataset path
-        // args 1: k
-        // args 2: json configuration file path
-        // args 3: aonn dataset path
+        // args 1: json configuration file path
+        // args 2: aonn dataset path
 
         Data data = Data.create(new File(args[0]), Charset.defaultCharset(), ',');
 
-
-        setAttributeType(data, args[2]);
-//        data.getDefinition().setAttributeType("Combined OD1", AttributeType.IDENTIFYING_ATTRIBUTE);
-//        data.getDefinition().setAttributeType("Death Date", AttributeType.IDENTIFYING_ATTRIBUTE);
-//        data.getDefinition().setAttributeType("Race", AttributeType.INSENSITIVE_ATTRIBUTE);
-//        data.getDefinition().setAttributeType("Case Dispo", AttributeType.INSENSITIVE_ATTRIBUTE);
-//        data.getDefinition().setAttributeType("Case Dispo", AttributeType.SENSITIVE_ATTRIBUTE);
-//        data.getDefinition().setAttributeType("Age", AgeBuilder);
-//        data.getDefinition().setAttributeType("Incident Zip", ZIPBuilder);
-//        data.getDefinition().setAttributeType("Decedent Zip", ZIPBuilder);
+        int k = parseConf(data, args[1]);
+//        data.getDefinition().parseConf("Combined OD1", AttributeType.IDENTIFYING_ATTRIBUTE);
+//        data.getDefinition().parseConf("Death Date", AttributeType.IDENTIFYING_ATTRIBUTE);
+//        data.getDefinition().parseConf("Race", AttributeType.INSENSITIVE_ATTRIBUTE);
+//        data.getDefinition().parseConf("Case Dispo", AttributeType.INSENSITIVE_ATTRIBUTE);
+//        data.getDefinition().parseConf("Case Dispo", AttributeType.SENSITIVE_ATTRIBUTE);
+//        data.getDefinition().parseConf("Age", AgeBuilder);
+//        data.getDefinition().parseConf("Incident Zip", ZIPBuilder);
+//        data.getDefinition().parseConf("Decedent Zip", ZIPBuilder);
 
 
         ARXAnonymizer anonymizer = new ARXAnonymizer();
         ARXConfiguration config = ARXConfiguration.create();
-        config.addPrivacyModel(new KAnonymity(Integer.parseInt(args[1])));
+        config.addPrivacyModel(new KAnonymity(k));
         config.setMaxOutliers(0d);
         ARXResult result = anonymizer.anonymize(data, config);
 
@@ -67,57 +64,72 @@ public class Anonymity {
 //        }
 
         DataHandle handle = result.getOutput();
-        handle.save(new File(args[3]), ',');
+        handle.save(new File(args[2]), ',');
 
         /*ARXConfiguration config = ARXConfiguration.create();
         config.addCriterion(new KAnonymity(5));
         config.setMaxOutliers(0.02d);
-        data.getDefinition().setAttributeType("disease", AttributeType.SENSITIVE_ATTRIBUTE);
+        data.getDefinition().parseConf("disease", AttributeType.SENSITIVE_ATTRIBUTE);
         ARXAnonymizer anonymizer = new ARXAnonymizer();
         ARXResult result = anonymizer.anonymize(data, config);
         DataHandle handle = result.getOutput();
         handle.save(new File("result.csv"), '\t');*/
     }
 
-    private static void setAttributeType(Data data, String jsonPath) {
+    /**
+     * parse the conf file, return k and set all the attr
+     * @param data
+     * @param jsonPath
+     * @return k
+     */
+    private static int parseConf(Data data, String jsonPath) {
+        int rstK = -1;
         JSONParser parser = new JSONParser();
 
         try {
             JSONObject jsonObject = (JSONObject)parser.parse(new FileReader(jsonPath));
-            for (Object key : jsonObject.keySet()) {
-                String k = (String) key;
-                String v = (String) jsonObject.get(k);
+            rstK = Integer.parseInt((String) jsonObject.get("k"));
 
-                AttributeType attributeType = null;
-                if (v.equals("Sensitive")) {
-                    attributeType = AttributeType.SENSITIVE_ATTRIBUTE;
-                    data.getDefinition().setAttributeType(k, attributeType);
-                } else if (v.equals("Identifying")) {
-                    attributeType = AttributeType.IDENTIFYING_ATTRIBUTE;
-                    data.getDefinition().setAttributeType(k, attributeType);
-                } else if (v.equals("Insensitive")) {
-                    attributeType = AttributeType.INSENSITIVE_ATTRIBUTE;
-                    data.getDefinition().setAttributeType(k, attributeType);
-                } else if (v.equals("Identifying-Age")) {
-                    HierarchyBuilderIntervalBased<Long> AgeBuilder = HierarchyBuilderIntervalBased.create(
-                            DataType.INTEGER,
-                            new Range<Long>(0l,0l,0l),
-                            new Range<Long>(99l,99l,99l));
-                    AgeBuilder.setAggregateFunction(DataType.INTEGER.createAggregate().createIntervalFunction(true, false));
-                    AgeBuilder.addInterval(0l, 15l);
-                    AgeBuilder.addInterval(15l, 30l);
-                    AgeBuilder.addInterval(30l, 45l);
-                    AgeBuilder.addInterval(45l, 60l);
-                    AgeBuilder.getLevel(0).addGroup(2);
-                    AgeBuilder.getLevel(1).addGroup(3);
+            HierarchyBuilderRedactionBased<?> ZIPBuilder = HierarchyBuilderRedactionBased.create(Order.RIGHT_TO_LEFT,
+                    Order.RIGHT_TO_LEFT,
+                    ' ',
+                    '*');
 
-                    data.getDefinition().setAttributeType(k, AgeBuilder);
-                } else if (v.equals("Identifying-Zip")) {
-                    HierarchyBuilderRedactionBased<?> ZIPBuilder = HierarchyBuilderRedactionBased.create(Order.RIGHT_TO_LEFT,
-                            Order.RIGHT_TO_LEFT,
-                            ' ',
-                            '*');
-                    data.getDefinition().setAttributeType(k, ZIPBuilder);
+            HierarchyBuilderIntervalBased<Long> AgeBuilder = HierarchyBuilderIntervalBased.create(
+                    DataType.INTEGER,
+                    new Range<Long>(0l,0l,0l),
+                    new Range<Long>(99l,99l,99l));
+            AgeBuilder.setAggregateFunction(DataType.INTEGER.createAggregate().createIntervalFunction(true, false));
+            AgeBuilder.addInterval(0l, 15l);
+            AgeBuilder.addInterval(15l, 30l);
+            AgeBuilder.addInterval(30l, 45l);
+            AgeBuilder.addInterval(45l, 60l);
+            AgeBuilder.getLevel(0).addGroup(2);
+            AgeBuilder.getLevel(1).addGroup(3);
+
+            if (jsonObject.containsKey("sensitive")) {
+                for (Object col : (JSONArray) jsonObject.get("sensitive")) {
+                    data.getDefinition().setAttributeType((String) col, AttributeType.SENSITIVE_ATTRIBUTE);
+                }
+            }
+            if (jsonObject.containsKey("insensitive")) {
+                for (Object col : (JSONArray) jsonObject.get("insensitive")) {
+                    data.getDefinition().setAttributeType((String) col, AttributeType.INSENSITIVE_ATTRIBUTE);
+                }
+            }
+            if (jsonObject.containsKey("identifying")) {
+                for (Object col : (JSONArray) jsonObject.get("identifying")) {
+                    data.getDefinition().setAttributeType((String) col, AttributeType.IDENTIFYING_ATTRIBUTE);
+                }
+            }
+            if (jsonObject.containsKey("age")) {
+                for (Object col : (JSONArray) jsonObject.get("age")) {
+                    data.getDefinition().setAttributeType((String) col, AgeBuilder);
+                }
+            }
+            if (jsonObject.containsKey("zip")) {
+                for (Object col : (JSONArray) jsonObject.get("zip")) {
+                    data.getDefinition().setAttributeType((String) col, ZIPBuilder);
                 }
             }
         } catch (IOException e) {
@@ -126,6 +138,7 @@ public class Anonymity {
             e.printStackTrace();
         }
 
+        return rstK;
     }
 
     protected static void printResult(final ARXResult result, final Data data) {
