@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="./">unKnown</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="./"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                  <li><a href="#"><span class="glyphicon glyphicon-book"></span> Tutorials</a></li>
+                </ul>
+            </div>
+        </nav>
+        <ul class="nav nav-tabs nav-justified">
+            <li><a href="./import.html"><span class="glyphicon glyphicon-upload"></span> Import Dataset</a></li>
+            <li><a href="./anonymize.html"><span class="glyphicon glyphicon-eye-close"></span> Anonymize Attributes</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Preview Dataset</a></li>
+            <li class="active"><a href="/export.html"><span class="glyphicon glyphicon-download"></span> Export Dataset</a></li>
+        </ul>
+        <div class="page-header">
+            <h1>4. Export Datasets</h1>
+        </div>
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Export the Anonymized Dataset</div>
+                <div class="panel-body">
+                    <button type="button" class="btn btn-outline-primary export-button">Export CSV</button>
+                </div>
+            </div>
+        </div>
+        <div id="navigation">
+            <ul class="pager">
+                <li class="previous"><a href="./import.html">Back</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/export.js"></script>
+
+{% endblock %}

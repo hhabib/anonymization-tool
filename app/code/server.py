@@ -72,7 +72,12 @@ def suppression():
     return render_template('anonymize.html')
 
 
-@app.route('/export', methods=['GET'])
+@app.route('/export.html')
+def export():
+    return render_template('export.html')
+
+
+@app.route('/download', methods=['GET'])
 def download():
     anon_dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], "anon.csv")
     if os.path.isfile(anon_dataset_path):
