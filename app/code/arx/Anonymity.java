@@ -119,7 +119,7 @@ public class Anonymity {
             }
             if (jsonObject.containsKey("identifying")) {
                 for (Object col : (JSONArray) jsonObject.get("identifying")) {
-                    data.getDefinition().setAttributeType((String) col, AttributeType.IDENTIFYING_ATTRIBUTE);
+                    data.getDefinition().setAttributeType((String) col, AttributeType.QUASI_IDENTIFYING_ATTRIBUTE);
                 }
             }
             if (jsonObject.containsKey("age")) {
