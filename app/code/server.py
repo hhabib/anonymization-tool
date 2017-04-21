@@ -83,7 +83,7 @@ def download():
     if os.path.isfile(anon_dataset_path):
         return send_from_directory(directory=app.config['UPLOAD_FOLDER'], filename="anon.csv")
     else:
-        return "No file to export"
+        return redirect("/export.html")
 
 
 @app.route('/postcsv', methods=['POST'])
