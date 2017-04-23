@@ -3,6 +3,8 @@ import os
 from flask import Flask, jsonify, render_template, request, json, session
 from flask import flash
 from flask import redirect
+from flask import send_from_directory
+
 from db import *
 import k_anon
 
@@ -14,11 +16,13 @@ app.config['ori_db_name'] = 'db1'
 app.config['ano_db_name'] = 'db2'
 ori_dataset_path = None
 
+
 @app.route('/_array2python')
 def array2python():
     session['dataset_attributes'] = json.loads(request.args.get('attributes'))
     attributes = session['dataset_attributes']
     return jsonify(result=attributes)
+
 
 @app.route('/_categorization2python')
 def categorization2python():
@@ -46,6 +50,7 @@ def categorization2python():
     import2db()
     return ""
 
+
 @app.route('/_python2array')
 def python2array():
     attributes = session.get('dataset_attributes', None)
@@ -71,6 +76,20 @@ def suppression():
 def resultspage():
     return render_template('results.html')
 
+@app.route('/export.html')
+def export():
+    return render_template('export.html')
+
+
+@app.route('/download', methods=['GET'])
+def download():
+    anon_dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], "anon.csv")
+    if os.path.isfile(anon_dataset_path):
+        return send_from_directory(directory=app.config['UPLOAD_FOLDER'], filename="anon.csv")
+    else:
+        return redirect("/export.html")
+
+
 @app.route('/postcsv', methods=['POST'])
 def get_post_csv():
     # check if the post request has the file part
@@ -91,6 +110,7 @@ def get_post_csv():
     ori_dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
 
     return "Received the file!"
+
 
 @app.route('/kanon', methods=['POST'])
 def k_anonymity():
@@ -113,7 +133,6 @@ def k_anonymity():
     if conf:
         conf.save(os.path.join(app.config['CONF_FOLDER'], conf.filename))
 
-
     ori_dataset_path = session.get('ori_dataset_path')
     k = request.form['k']
     conf_json_path = os.path.join(app.config['CONF_FOLDER'], conf.filename)
@@ -123,6 +142,7 @@ def k_anonymity():
     session['anon_dataset_path'] = anon_dataset_path
 
     return ""
+
 
 @app.route('/import2db')
 def import2db():
