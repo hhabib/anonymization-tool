@@ -1,0 +1,35 @@
+{% extends "layout.html" %} -->
+
+<!-- {% block body %} -->
+<!doctype html>
+<title>Anonymization Tool</title>
+<script type="text/javascript"
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript">
+  var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<body>
+	<div class="container">
+		<div class="jumbotron">
+	  		<h1>Summary</h1>
+	  		<p>These are the summary statistics for the anonymized dataset.</p>
+<!-- 	  		<button type="button" class="btn btn-primary" onclick="window.location.href='./import.html'">Get Started</button>
+	  		<button type="button" class="btn btn-primary" onclick="window.location.href='./tutorials.html'">Tutorials</button> -->
+	  		<textarea readonly row="40" cols="80" style="resize:none"></textarea>
+	  		<h2>Query Database</h2>
+	  		<!-- <textarea row="2" cols="80" onfocus="if(this.value==this.defaultValue)this.value='Enter SQL query to fetch results from the database';"> -->
+	  		<textarea placeholder="Enter SQL query to fetch results from the database" row="2" cols="80" id = "userQuery"></textarea>
+            <button type="button" class="btn btn-primary" id="btnUserQuery">Submit Query</button>
+            <h3>Results</h3>
+            <textarea placeholder="Result of Query" row="2" cols="80" id = "queryResult"></textarea>
+  		</div>
+  	</div>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/user_query.js"></script>
+</body>
+</html>
+
+<!-- {% endblock %}
