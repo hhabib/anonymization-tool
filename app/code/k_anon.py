@@ -30,7 +30,7 @@ example:
 def __subprocess_cmd(command):
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     proc_stdout = process.communicate()[0].strip()
-    print proc_stdout
+    return proc_stdout
 
 
 def k_anonymity(src_path, conf_path, dest_path):
@@ -39,7 +39,7 @@ def k_anonymity(src_path, conf_path, dest_path):
     javac -cp libarx-3.5.1.jar:json-simple-1.1.1.jar Anonymity.java
     java -cp libarx-3.5.1.jar:json-simple-1.1.1.jar:. Anonymity {} {} {}
     rm ./*.class
-    rm ./*.json
+    # rm ./*.json
     """.format(src_path, conf_path, dest_path)
-    __subprocess_cmd(cmd)
+    return __subprocess_cmd(cmd)
 

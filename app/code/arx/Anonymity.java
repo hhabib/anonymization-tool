@@ -53,7 +53,7 @@ public class Anonymity {
         ARXResult result = anonymizer.anonymize(data, config);
 
         // Print info
-//        printResult(result, data);
+        printResult(result, data);
 
         // Process results
 //        System.out.println(" - Transformed data:");
@@ -63,7 +63,7 @@ public class Anonymity {
 //            System.out.println(Arrays.toString(transformed.next()));
 //        }
 
-        DataHandle handle = result.getOutput();
+        DataHandle handle = result.getOutput(false);
         handle.save(new File(args[2]), ',');
 
         /*ARXConfiguration config = ARXConfiguration.create();

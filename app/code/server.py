@@ -44,11 +44,24 @@ def categorization2python():
     # ori_dataset_path = session.get('ori_dataset_path')
     anon_dataset_path = os.path.join(app.config['UPLOAD_FOLDER'], "anon.csv")
 
-    k_anon.k_anonymity(ori_dataset_path, conf_path, anon_dataset_path)
+    result_info = k_anon.k_anonymity(ori_dataset_path, conf_path, anon_dataset_path)
     session['anon_dataset_path'] = anon_dataset_path
 
-    import2db()
-    return ""
+    print result_info
+
+    mysql = Mysql()
+    res = ""
+    if ori_dataset_path:
+        mysql.create_table(ori_dataset_path, app.config['ori_db_name'])
+        mysql.import_csv(ori_dataset_path, app.config['ori_db_name'])
+        res += "imported origin dataset"
+
+    if anon_dataset_path:
+        mysql.create_table(anon_dataset_path, app.config['ano_db_name'])
+        mysql.import_csv(anon_dataset_path, app.config['ano_db_name'])
+        res += "imported anon dataset"
+
+    return res
 
 
 @app.route('/_python2array')
@@ -148,9 +161,9 @@ def k_anonymity():
 def import2db():
     mysql = Mysql()
     res = ""
-    if session.get('ori_dataset_path', None):
-        mysql.create_table(session.get('ori_dataset_path', None), app.config['ori_db_name'])
-        mysql.import_csv(session.get('ori_dataset_path', None), app.config['ori_db_name'])
+    if ori_dataset_path:
+        mysql.create_table(ori_dataset_path, app.config['ori_db_name'])
+        mysql.import_csv(ori_dataset_path, app.config['ori_db_name'])
         res += "imported origin dataset"
 
     if session.get('anon_dataset_path', None):
@@ -165,7 +178,7 @@ def user_query():
     query = request.form['query']
     mysql = Mysql()
     res = mysql.exec_sql(query)
-    return res
+    return json.dumps(res)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8000, debug=True)

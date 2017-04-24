@@ -45,7 +45,13 @@ class Mysql:
 
         sql = ""
         for col in first_line:
-            sql += "`" + col[1:-1] + "` TEXT,"
+            start = 0
+            end = len(col)
+            if col[0] == '"':
+                start = 1
+            if col[-1] == '"':
+                end = len(col) - 1
+            sql += "`" + col[start:end] + "` TEXT,"
         sql = sql[:-1]
         return sql
 
@@ -72,3 +78,5 @@ class Mysql:
         sql = "load data local infile '{0}' into table {1} columns terminated by ','"\
         "LINES TERMINATED BY '\n' IGNORE 1 LINES;".format(path, db_name)
         self.exec_sql(sql)
+
+
