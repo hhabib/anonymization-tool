@@ -68,5 +68,5 @@ function submit() {
         console.log(data.result)
     });
 
-    window.location = "./anonymize.html";   
+    window.location = "./results.html";
 }
