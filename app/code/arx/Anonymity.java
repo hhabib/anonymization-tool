@@ -109,7 +109,7 @@ public class Anonymity {
 
             if (jsonObject.containsKey("sensitive")) {
                 for (Object col : (JSONArray) jsonObject.get("sensitive")) {
-                    data.getDefinition().setAttributeType((String) col, AttributeType.SENSITIVE_ATTRIBUTE);
+                    data.getDefinition().setAttributeType((String) col, AttributeType.INSENSITIVE_ATTRIBUTE);
                 }
             }
             if (jsonObject.containsKey("insensitive")) {
