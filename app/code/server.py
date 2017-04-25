@@ -1,4 +1,5 @@
 import os
+import string
 
 from flask import Flask, jsonify, render_template, request, json, session
 from flask import flash
@@ -15,6 +16,7 @@ app.config['CONF_FOLDER'] = '/code/arx'
 app.config['ori_db_name'] = 'db1'
 app.config['ano_db_name'] = 'db2'
 ori_dataset_path = None
+k_anon_res = None
 
 
 @app.route('/_array2python')
@@ -48,6 +50,8 @@ def categorization2python():
     session['anon_dataset_path'] = anon_dataset_path
 
     print result_info
+    global k_anon_res
+    k_anon_res = result_info
 
     mysql = Mysql()
     res = ""
@@ -62,6 +66,16 @@ def categorization2python():
         res += "imported anon dataset"
 
     return res
+
+
+@app.route('/getkanonresult')
+def get_k_anon_result():
+    global k_anon_res
+    # print attributes
+    if k_anon_res:
+        return k_anon_res
+    else:
+        return "There might be something wrong!"
 
 
 @app.route('/_python2array')
@@ -85,9 +99,11 @@ def importpage():
 def suppression():
     return render_template('anonymize.html')
 
+
 @app.route('/results.html')
 def resultspage():
     return render_template('results.html')
+
 
 @app.route('/export.html')
 def export():
@@ -173,12 +189,24 @@ def import2db():
 
     return res
 
+
 @app.route('/userQuery', methods=['POST'])
 def user_query():
     query = request.form['query']
     mysql = Mysql()
-    res = mysql.exec_sql(query)
+    res = {}
+    if "`db`" in query:
+        db1_query = string.replace(query, "`db`", "`db1`")
+        db2_query = string.replace(query, "`db`", "`db2`")
+        res["db1"] = mysql.exec_sql(db1_query)
+        res["db2"] = mysql.exec_sql(db2_query)
+    elif "`db1`" in query:
+        res["db1"] = mysql.exec_sql(query)
+    else:
+        res["db2"] = mysql.exec_sql(query)
+
     return json.dumps(res)
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8000, debug=True)
