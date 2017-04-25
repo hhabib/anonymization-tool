@@ -183,8 +183,10 @@ public class Anonymity {
             }
         }
 
+        String ls = String.format("%.3f", Double.parseDouble(result.getGlobalOptimum().getLowestScore().toString()));
+        String hs = String.format("%.3f", Double.parseDouble(result.getGlobalOptimum().getHighestScore().toString()));
         // Print
-        System.out.println(" - Information loss: " + result.getGlobalOptimum().getLowestScore() + " / " + result.getGlobalOptimum().getHighestScore());
+        System.out.println(" - Information loss: " + ls + " / " + hs);
         System.out.println(" - Optimal generalization");
         for (int i = 0; i < qis.size(); i++) {
             System.out.println("   * " + identifiers[i] + ": " + generalizations[i]);
