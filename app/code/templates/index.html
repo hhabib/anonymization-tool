@@ -1,16 +1,50 @@
 {% extends "layout.html" %}
 
 {% block body %}
-	<div class="container">
-		<div class="jumbotron">
-	  		<h1>Welcome to unKnown</h1>
-	  		<p> unKnown is a tool that will help anonymize your dataset using k-anonymity. Click "Get Started" to import your data or "Tutorials" to learn how to use this tool to anonymize your dataset.</p>
-	  		<button type="button" class="btn btn-primary" onclick="window.location.href='./import.html'">Get Started</button>
-	  		<button type="button" class="btn btn-primary" onclick="window.location.href='./tutorials.html'">Tutorials</button>
+	<div class="container-fluid">
+		<nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="./"><img src="/static/img/name-logo.png" width="200px"></a></li>
+                </ul>
+            </div>
+        </nav>
+		<div class="homeBackground">
+			<div class="homeText">
+				<div class="row">
+					<div class="col">
+				  		<h1>Welcome to unKnown</h1>
+				  	</div>
+				</div>
+				<div class="row">
+			  		<div class="col-sm-5">
+			  			<p> unKnown is a tool that will help anonymize your dataset using k-anonymity. Click "Get Started" to import your data or "Tutorials" to learn how to use this tool to anonymize your dataset.</p>
+			  		</div>
+			  	</div>
+		  		<div class="row">
+		  			<div class="col-sm-5">
+				  		<button type="button" class="introButton" onclick="window.location.href='./import.html'">Get Started</button>
+				  		<button type="button" class="introButton" onclick="window.location.href='./tutorials.html'">Tutorials</button>
+					</div>
+				</div>
+			</div>
   		</div>
+  		<div class="homeBottom">
+	 		<div class="col-md-6">
+	 			<h2>About unKnown</h2>
+	 			<p> unKnown was developed as a course project for 08-605: Engineering Privacy in Software at Carnegie Mellon University. During the development of the tool, the team collaborated with the Western Pennsylvania Data Center.</p>
+	 			<button type="button" class="bottomButton" onclick="window.location.href='./import.html'">Get Started</button>
+	 		</div>
+	 		<div class="col-md-6">
+	 			<h2>Tutorials</h2> 
+	 			<p> View our tutorials to learn more about the theory behind k-anonymity, the requirements for running unKnown, and a step-by-step guide on how to anonymize your dataset.</p>
+	 			<button type="button" class="bottomButton" onclick="window.location.href='./tutorials.html'">Tutorials</button>
+	 		</div>
+	 	</div>
   	</div>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {% endblock %}
