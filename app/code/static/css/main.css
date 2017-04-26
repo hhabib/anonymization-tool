@@ -1,10 +1,27 @@
-html * {
-   font-family: 'Source Sans Pro', 'Open Sans', sans-serif !important;
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
 }
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 30px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 30px;
+  background-color: #4f4e4e;
+}
+
 
 .navbar {
 	margin-bottom: 0px;
 	border-radius: 0px;
+	padding: 0px;
 }
 
 .navbar-inverse {
@@ -20,12 +37,13 @@ html * {
 .homeBackground {
 	background-image: url("/static/img/frontpageimage.jpg");
 	background-repeat: no-repeat;
-	height: 642px;
+	height: 500px;
+	background-size: cover;
+	background-position: center;
 }
 
 .homeText {
 	padding-top: 150px;
-	margin-left: 40px;
 }
 
 .homeText h1{
@@ -39,16 +57,12 @@ html * {
 	font-weight: 200;
 	margin-top: 20px;
 }
-
-.introButton {
-	margin-top: 45px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	background: transparent;
-	font-size: 18px;
+.intro-buttons {
+	margin-top: 2em;
+}
+.intro-button {
 	color: white;
-	font-weight: 100;
-	border: 1px solid white;
+	border-color: white;
 }
 
 .introButton:hover {
@@ -56,26 +70,13 @@ html * {
 	color: #4f4e4e;
 }
 
-.homeBottom {
+.home-buttons {
+	margin-top: 15px;
+	padding-bottom: 20px;
 	color: #4f4e4e;
 }
 
-.bottomButton {
-	margin-top: 15px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	background: white;
-	font-size: 14px;
-	color: #39526d;
-	font-weight: 300;
-	border: 1px solid #39526d;
-}
-
-.bottomButton:hover {
-	background: #e3e4e6;
-}
-
-footer {
-	background: black;
+.home-buttons h2 {
+	padding-top: 10px;
 }
 
