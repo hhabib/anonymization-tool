@@ -1,50 +1,57 @@
 {% extends "layout.html" %}
 
 {% block body %}
-	<div class="container-fluid">
-		<nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <ul class="nav navbar-nav navbar-right">
-                  <li><a href="./"><img src="/static/img/name-logo.png" width="200px"></a></li>
-                </ul>
-            </div>
-        </nav>
+	<nav class="navbar navbar-inverse">
+		<div class="container">
+		    <a class="navbar-brand float-right" href="#">
+			    <img src="/static/img/name-logo.png" width="200px" class="d-inline-block align-top" alt="">
+		  	</a>
+	  	</div>
+	</nav>
 		<div class="homeBackground">
-			<div class="homeText">
-				<div class="row">
-					<div class="col">
-				  		<h1>Welcome to unKnown</h1>
+			<div class="container">
+				<div class="homeText">
+					<div class="row">
+						<div class="col">
+					  		<h1>Welcome to unKnown</h1>
+					  	</div>
+					</div>
+					<div class="row">
+				  		<div class="col-sm-5">
+				  			<p> unKnown is a tool that will help anonymize your dataset using k-anonymity. Click "Get Started" to import your data or "Tutorials" to learn how to use this tool to anonymize your dataset.</p>
+				  		</div>
 				  	</div>
-				</div>
-				<div class="row">
-			  		<div class="col-sm-5">
-			  			<p> unKnown is a tool that will help anonymize your dataset using k-anonymity. Click "Get Started" to import your data or "Tutorials" to learn how to use this tool to anonymize your dataset.</p>
-			  		</div>
-			  	</div>
-		  		<div class="row">
-		  			<div class="col-sm-5">
-				  		<button type="button" class="introButton" onclick="window.location.href='./import.html'">Get Started</button>
-				  		<button type="button" class="introButton" onclick="window.location.href='./tutorials.html'">Tutorials</button>
+			  		<div class="row intro-buttons">
+			  			<div class="col-sm-5">
+					  		<a class="btn btn-outline-secondary intro-button" href="/import.html">Get Started</a>
+					  		<a class="btn btn-outline-secondary intro-button" href="/static/tutorials.pdf">Tutorials</a>
+						</div>
 					</div>
 				</div>
-			</div>
+	  		</div>
   		</div>
-  		<div class="homeBottom">
-	 		<div class="col-md-6">
-	 			<h2>About unKnown</h2>
-	 			<p> unKnown was developed as a course project for 08-605: Engineering Privacy in Software at Carnegie Mellon University. During the development of the tool, the team collaborated with the Western Pennsylvania Data Center.</p>
-	 			<button type="button" class="bottomButton" onclick="window.location.href='./import.html'">Get Started</button>
+  		<div class="container">
+  			<div class="row home-buttons">
+	 			<div class="col-md-6">
+		 			<h2>About unKnown</h2>
+		 			<p> unKnown was developed as a course project for 08-605: Engineering Privacy in Software at Carnegie Mellon University. During the development of the tool, the team collaborated with the Western Pennsylvania Data Center.</p>
+		 			<a class="btn btn-outline-primary" href="/import.html">Get Started<a>
+		 		</div>
+		 		<div class="col-md-6">
+		 			<h2>Tutorials</h2> 
+		 			<p> View our tutorials to learn more about the theory behind k-anonymity, the requirements for running unKnown, and a step-by-step guide on how to anonymize your dataset.</p>
+		 			<a class="btn btn-outline-primary" href="/static/tutorials.pdf">Tutorials</a>
+		 		</div>
 	 		</div>
-	 		<div class="col-md-6">
-	 			<h2>Tutorials</h2> 
-	 			<p> View our tutorials to learn more about the theory behind k-anonymity, the requirements for running unKnown, and a step-by-step guide on how to anonymize your dataset.</p>
-	 			<button type="button" class="bottomButton" onclick="window.location.href='./tutorials.html'">Tutorials</button>
-	 		</div>
-	 	</div>
-  	</div>
+ 		</div>
+  	<footer class="footer">
+		<div class="container">
+		</div>
+    </footer>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 {% endblock %}
