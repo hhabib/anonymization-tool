@@ -28,5 +28,14 @@ class TestDbMethods(unittest.TestCase):
         self.assertNotEqual(len(mysql.exec_sql("SELECT count(*) from test_db limit 10;")), 0)
         self.assertFalse(mysql.exec_sql("drop table test_db"))
 
+    def test_edge_cases(self):
+        mysql = db.Mysql()
+        self.assertFalse(mysql.exec_sql(None))
+        self.assertTrue("error" in mysql.exec_sql("dasdwda"))
+        self.assertFalse(mysql.create_table("", ""))
+        self.assertFalse(mysql.create_table(None, None))
+        self.assertFalse(mysql.import_csv("", ""))
+        self.assertFalse(mysql.import_csv(None, None))
+
 if __name__ == '__main__':
     unittest.main()

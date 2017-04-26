@@ -24,10 +24,18 @@ class Mysql:
         :param sql:
         :return: the result if any
         '''
+
+        if not sql:
+            return
+
         with self.connection.cursor() as cursor:
-            cursor.execute(sql)
-            self.connection.commit()
-            return cursor.fetchall()
+            try:
+                cursor.execute(sql)
+                self.connection.commit()
+                return cursor.fetchall()
+            except Exception as e:
+                return e.args[1]
+
 
     def __generate_table_structure_from_csv(self, path):
         '''
@@ -62,6 +70,9 @@ class Mysql:
         :param db_name:
         :return:
         '''
+        if not path or not db_name:
+            return
+
         structure = self.__generate_table_structure_from_csv(path)
         sql_create_table = """drop table if exists `{0}`;
               create table `{0}` ({1});""".format(db_name, structure)
@@ -75,6 +86,9 @@ class Mysql:
         :param db_name:
         :return:
         '''
+        if not path or not db_name:
+            return
+
         sql = "load data local infile '{0}' into table {1} columns terminated by ','"\
         "LINES TERMINATED BY '\n' IGNORE 1 LINES;".format(path, db_name)
         self.exec_sql(sql)
