@@ -4,13 +4,13 @@
 
     <div class="container">
         <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                  <a class="navbar-brand" href="./">unKnown</a>
-                </div>
+                <div class="container">
+                <a class="navbar-brand float-left" href="./">
+                    <img src="/static/img/name-logo.png" width="150px" class="d-inline-block align-top" alt="">
+                </a>
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="./"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                  <li><a href="/static/tutorials.pdf"><span class="glyphicon glyphicon-book"></span> Tutorials</a></li>
+                      <li><a href="./"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                      <li><a href="/static/tutorials.pdf"><span class="glyphicon glyphicon-book"></span> Tutorials</a></li>
                 </ul>
             </div>
         </nav>
@@ -18,7 +18,7 @@
             <li><a href="./import.html"><span class="glyphicon glyphicon-upload"></span> Import Dataset</a></li>
             <li class="active"><a href="./anonymize.html"><span class="glyphicon glyphicon-eye-close"></span> Anonymize Attributes</a></li>
             <li><a href="./results.html"><span class="glyphicon glyphicon-list-alt"></span> Preview Dataset</a></li>
-            <li><a href="/export.html"><span class="glyphicon glyphicon-download"></span> Export Dataset</a></li>
+            <li><a href="./export.html"><span class="glyphicon glyphicon-download"></span> Export Dataset</a></li>
         </ul>
         <div class="page-header">
             <h1>2. Annonymize Attributes</h1>
@@ -57,8 +57,13 @@
             </ul>
         </div>
     </div>
+    <footer class="footer">
+        <div class="container">
+        </div>
+    </footer>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/categorize_attr.js"></script>
 

@@ -17,11 +17,13 @@ body {
   background-color: #4f4e4e;
 }
 
-
 .navbar {
-	margin-bottom: 0px;
 	border-radius: 0px;
 	padding: 0px;
+}
+
+.navbar-right {
+	margin-right: 20px;
 }
 
 .navbar-inverse {
@@ -29,11 +31,13 @@ body {
     border-color: #38435C;
 }
 
-.navbar-nav>li>a {
-    padding-top: 0px; 
-    padding-bottom: 0px; 
+.navbar-inverse .navbar-nav>li>a{
+	color: white;
 }
 
+.navbar-brand {
+	padding-top: 4px;
+}
 .homeBackground {
 	background-image: url("/static/img/frontpageimage.jpg");
 	background-repeat: no-repeat;
@@ -78,5 +82,22 @@ body {
 
 .home-buttons h2 {
 	padding-top: 10px;
+}
+
+.panel-primary {
+    border-color: #38435c;
+}
+
+.panel-primary>.panel-heading {
+	background-color: #38435c;
+	border-color: #38435c;
+}
+
+a {
+	color: #38435c;
+}
+
+h1 {
+	color: #4f4e4e;
 }
 
