@@ -3,6 +3,21 @@
 html {
   position: relative;
   min-height: 100%;
+<<<<<<< HEAD
+=======
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 30px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 30px;
+  background-color: #4f4e4e;
+>>>>>>> hana
 }
 body {
   /* Margin bottom by footer height */
@@ -19,9 +34,15 @@ body {
 
 
 .navbar {
-	margin-bottom: 0px;
 	border-radius: 0px;
 	padding: 0px;
+<<<<<<< HEAD
+=======
+}
+
+.navbar-right {
+	margin-right: 20px;
+>>>>>>> hana
 }
 
 .navbar-inverse {
@@ -29,11 +50,13 @@ body {
     border-color: #38435C;
 }
 
-.navbar-nav>li>a {
-    padding-top: 0px; 
-    padding-bottom: 0px; 
+.navbar-inverse .navbar-nav>li>a{
+	color: white;
 }
 
+.navbar-brand {
+	padding-top: 4px;
+}
 .homeBackground {
 	background-image: url("/static/img/frontpageimage.jpg");
 	background-repeat: no-repeat;
@@ -74,9 +97,33 @@ body {
 	margin-top: 15px;
 	padding-bottom: 20px;
 	color: #4f4e4e;
+<<<<<<< HEAD
 }
 
 .home-buttons h2 {
 	padding-top: 10px;
+=======
+}
+
+.home-buttons h2 {
+	padding-top: 10px;
+}
+
+.panel-primary {
+    border-color: #38435c;
+}
+
+.panel-primary>.panel-heading {
+	background-color: #38435c;
+	border-color: #38435c;
+}
+
+a {
+	color: #38435c;
+}
+
+h1 {
+	color: #4f4e4e;
+>>>>>>> hana
 }
 
