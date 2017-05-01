@@ -3,13 +3,13 @@
 html {
   position: relative;
   min-height: 100%;
-<<<<<<< HEAD
-=======
 }
+
 body {
   /* Margin bottom by footer height */
   margin-bottom: 30px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -17,12 +17,13 @@ body {
   /* Set the fixed height of the footer here */
   height: 30px;
   background-color: #4f4e4e;
->>>>>>> hana
 }
+
 body {
   /* Margin bottom by footer height */
   margin-bottom: 30px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
@@ -36,13 +37,10 @@ body {
 .navbar {
 	border-radius: 0px;
 	padding: 0px;
-<<<<<<< HEAD
-=======
 }
 
 .navbar-right {
 	margin-right: 20px;
->>>>>>> hana
 }
 
 .navbar-inverse {
@@ -97,12 +95,10 @@ body {
 	margin-top: 15px;
 	padding-bottom: 20px;
 	color: #4f4e4e;
-<<<<<<< HEAD
 }
 
 .home-buttons h2 {
 	padding-top: 10px;
-=======
 }
 
 .home-buttons h2 {
@@ -124,6 +120,5 @@ a {
 
 h1 {
 	color: #4f4e4e;
->>>>>>> hana
 }
 
