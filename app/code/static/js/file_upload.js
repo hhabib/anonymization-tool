@@ -70,7 +70,7 @@ $(document).ready(function() {
                     $('#contents').html(html);
 
                     // Add previous & next buttons
-                    $('#navigation').html('<ul class=\"pager\"><li class=\"previous\"><a href=\"./\">Back</a></li><li class=\"next\"><a href=\"./anonymize.html\">Next</a></li></ul>');
+                    $('#navigation').html('<ul class=\"pager\"><li><a href=\"./\">Back</a></li><li><a href=\"./anonymize.html\">Next</a></li></ul>');
                 };
                 reader.onerror = function() {
                     console.log('Unable to read ' + file.fileName);
