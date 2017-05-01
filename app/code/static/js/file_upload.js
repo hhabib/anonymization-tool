@@ -1,5 +1,7 @@
 $(document).ready(function() {
-
+    // Enable Bootstrap tooltips
+    $('[data-toggle="tooltip"]').tooltip(); 
+    
     // The event listener for the file upload
     document.getElementById('csvFileUpload').addEventListener('change', upload, false);
 
