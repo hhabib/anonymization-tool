@@ -114,6 +114,11 @@ body {
 	border-color: #38435c;
 }
 
+.alert {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
 a {
 	color: #38435c;
 }

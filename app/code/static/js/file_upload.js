@@ -55,7 +55,6 @@ $(document).ready(function() {
                         html += '<th>' + data[0][cell] + '</th>\r\n'
                     }
                     html += '</tr>\r\n</thead>\r\n<tbody>'
-                    
                     for(var row in data) {
                         if(row > 0 && row < 5) {
                             html += '<tr>\r\n';
@@ -68,6 +67,13 @@ $(document).ready(function() {
                     html += '</tbody>'
 
                     $('#contents').html(html);
+
+                    // Print how many rows were imported
+                    var numRows = data.length -1;          
+                    var rowHTML =  '<strong>Success!</strong> Imported ' + numRows + ' data points.';
+                    $('#num-rows').addClass("alert");
+                    $('#num-rows').addClass("alert-success");
+                    $('#num-rows').html(rowHTML);
 
                     // Add previous & next buttons
                     $('#navigation').html('<ul class=\"pager\"><li><a href=\"./\">Back</a></li><li><a href=\"./anonymize.html\">Next</a></li></ul>');
