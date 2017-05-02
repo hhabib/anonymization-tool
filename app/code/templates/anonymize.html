@@ -25,13 +25,16 @@
         </div>
         <div class="panel-group">
             <div class="panel panel-primary">
-                <div class="panel-heading">Specify whether each attribute is a quasi-identifier or sensitive. There are additional categorizations for quasi-identifiers that are zip codes or ages.</div>
+                <div class="panel-heading">Specify whether each attribute is sensitive <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title='Attributes labeled as sensitive will remain as they were in the original dataset'></span> or a type of quasi-identifier <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title='A quasi-idenfier is an attribute about the data subjects, like age or race, to which anonymization should be applied'></span> </div>
                 <div class="panel-body">
+                    <div class="alert alert-info">
+                        <strong>Info:</strong> Quasi-identifiers that are ages should be numerical values in the dataset (e.g., 26). Those that are zip codes should be in five-digit format (e.g., 15213).
+                    </div>
                     <div class="form-group" id="attrList"></div>
                 </div>
             </div>
             <div class="panel panel-primary">
-                <div class="panel-heading">Select a level of k.</div>
+                <div class="panel-heading">Select a level of k <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title='The level of k is the minimum number of data points are grouped together based on their quasi-identifiers.'></span></div>
                 <div class="panel-body">
                     <div class="form-group">
                         <select class="form-control" id="klevel" style="width: 100px">

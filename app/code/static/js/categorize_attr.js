@@ -11,7 +11,7 @@ $(document).ready(function() {
   
         for(var attr in attributes) {
             html += '<tr>\r\n';
-            html += '<td>' + attributes[attr] + '</td>\r\n<td><select class=\"form-control\" id=\"' + attributes[attr] + '\" style=\"width: 300px\">\r\n<option value=\"insensitive\">Sensitive</option>\r\n<option value=\"identifying\">Quasi-Identifier</option>\r\n<option value=\"age\">--> Age</option>\r\n<option value=\"zip\">--> Zip</option>\r\n</select></td>\r\n';
+            html += '<td>' + attributes[attr] + '</td>\r\n<td><select class=\"form-control\" id=\"' + attributes[attr] + '\" style=\"width: 300px\">\r\n<option value=\"insensitive\">Sensitive</option>\r\n<option value=\"identifying\">Quasi-Identifier (general)</option>\r\n<option value=\"age\">Quasi-Identifier (age)</option>\r\n<option value=\"zip\">Quasi-identifier (zip)</option>\r\n</select></td>\r\n';
             html += '</tr>\r\n<br>';
         }
         html += '</tbody></form>';
@@ -19,6 +19,9 @@ $(document).ready(function() {
         $('#attrList').html(html);
 
      });
+
+    // Enable Bootstrap tooltips
+    $('[data-toggle="tooltip"]').tooltip(); 
     
 });
 
