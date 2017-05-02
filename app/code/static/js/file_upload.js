@@ -1,7 +1,7 @@
 $(document).ready(function() {
     // Enable Bootstrap tooltips
     $('[data-toggle="tooltip"]').tooltip(); 
-    
+
     // The event listener for the file upload
     document.getElementById('csvFileUpload').addEventListener('change', upload, false);
 
@@ -58,7 +58,7 @@ $(document).ready(function() {
                     }
                     html += '</tr>\r\n</thead>\r\n<tbody>'
                     for(var row in data) {
-                        if(row > 0 && row < 5) {
+                        if(row > 0 && row < 6) {
                             html += '<tr>\r\n';
                             for(var item in data[row]) {
                                 html += '<td>' + data[row][item] + '</td>\r\n';
@@ -71,8 +71,13 @@ $(document).ready(function() {
                     $('#contents').html(html);
 
                     // Print how many rows were imported
-                    var numRows = data.length -1;          
-                    var rowHTML =  '<strong>Success!</strong> Imported ' + numRows + ' data points.';
+                    var numRows = data.length -1; 
+                    var rowHTML = "";
+                    if(data.length > 5) {         
+                        rowHTML =  '<strong>Success!</strong> Displaying 5 of ' + numRows + ' data points.';
+                    } else {
+                        rowHTML = '<strong>Success!</strong> Displaying all data points.';
+                    }
                     $('#num-rows').addClass("alert");
                     $('#num-rows').addClass("alert-success");
                     $('#num-rows').html(rowHTML);
