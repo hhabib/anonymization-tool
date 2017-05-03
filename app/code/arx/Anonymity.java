@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -37,7 +34,7 @@ public class Anonymity {
 
         Data data = Data.create(new File(args[0]), Charset.defaultCharset(), ',');
 
-        int k = parseConf(data, args[1]);
+        int k = parseConf(data, args[1], args[0]);
 //        data.getDefinition().parseConf("Combined OD1", AttributeType.IDENTIFYING_ATTRIBUTE);
 //        data.getDefinition().parseConf("Death Date", AttributeType.IDENTIFYING_ATTRIBUTE);
 //        data.getDefinition().parseConf("Race", AttributeType.INSENSITIVE_ATTRIBUTE);
@@ -79,8 +76,16 @@ public class Anonymity {
         handle.save(new File("result.csv"), '\t');*/
     }
 
+
     private static void saveFile(ARXResult result, String file) {
-        PrintWriter writer = new PrintWriter(file, "UTF-8");
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(file, "UTF-8");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         Iterator<String[]> transformed = result.getOutput(false).iterator();
         while (transformed.hasNext()) {
             StringBuilder line = new StringBuilder();
@@ -88,39 +93,42 @@ public class Anonymity {
                 StringBuilder sb = new StringBuilder();
                 if (s.endsWith("[")) {
                     sb.append(s.substring(0, s.length() - 1))
-                      .append("]");
-                    s = sb.toString();
+                            .append("]");
+                    s = sb.toString().replace(", ", "-");
                 }
                 line.append(s)
-                    .append(",");
+                        .append(",");
             }
             String record = line.toString().substring(0, line.toString().length() - 1);
-            writer.println();
+            writer.println(record);
         }
+        writer.close();
     }
+
     /**
      * parse the conf file, return k and set all the attr
+     *
      * @param data
      * @param jsonPath
      * @return k
      */
-    private static int parseConf(Data data, String jsonPath) {
+    private static int parseConf(Data data, String jsonPath, String datasetPath) {
         int rstK = -1;
         JSONParser parser = new JSONParser();
 
         try {
-            JSONObject jsonObject = (JSONObject)parser.parse(new FileReader(jsonPath));
+            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(jsonPath));
             rstK = Integer.parseInt((String) jsonObject.get("k"));
 
-            HierarchyBuilderRedactionBased<?> ZIPBuilder = HierarchyBuilderRedactionBased.create(Order.RIGHT_TO_LEFT,
+            HierarchyBuilderRedactionBased<?> suppressionBuilder = HierarchyBuilderRedactionBased.create(Order.RIGHT_TO_LEFT,
                     Order.RIGHT_TO_LEFT,
                     ' ',
                     '*');
 
             HierarchyBuilderIntervalBased<Long> AgeBuilder = HierarchyBuilderIntervalBased.create(
                     DataType.INTEGER,
-                    new Range<Long>(0l,0l,0l),
-                    new Range<Long>(99l,99l,99l));
+                    new Range<Long>(0l, 0l, 0l),
+                    new Range<Long>(99l, 99l, 99l));
             AgeBuilder.setAggregateFunction(DataType.INTEGER.createAggregate().createIntervalFunction(true, false));
             AgeBuilder.addInterval(0l, 15l);
             AgeBuilder.addInterval(15l, 30l);
@@ -144,14 +152,14 @@ public class Anonymity {
                     data.getDefinition().setAttributeType((String) col, AttributeType.QUASI_IDENTIFYING_ATTRIBUTE);
                 }
             }
-            if (jsonObject.containsKey("age")) {
-                for (Object col : (JSONArray) jsonObject.get("age")) {
-                    data.getDefinition().setAttributeType((String) col, AgeBuilder);
+            if (jsonObject.containsKey("numericgeneralization")) {
+                for (Object col : (JSONArray) jsonObject.get("numericgeneralization")) {
+                    data.getDefinition().setAttributeType((String) col, buildnumGenBuilder(datasetPath, (String) col));
                 }
             }
-            if (jsonObject.containsKey("zip")) {
-                for (Object col : (JSONArray) jsonObject.get("zip")) {
-                    data.getDefinition().setAttributeType((String) col, ZIPBuilder);
+            if (jsonObject.containsKey("suppression")) {
+                for (Object col : (JSONArray) jsonObject.get("suppression")) {
+                    data.getDefinition().setAttributeType((String) col, suppressionBuilder);
                 }
             }
         } catch (IOException e) {
@@ -216,4 +224,66 @@ public class Anonymity {
         System.out.println(" - Statistics");
         System.out.println(result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics());
     }
+
+
+    private static HierarchyBuilderIntervalBased<Long> buildnumGenBuilder(String path, String colName)
+            throws NumberFormatException {
+
+        long mean = 0;
+        long std = 0;
+        long max = Long.MIN_VALUE;
+        long min = Long.MAX_VALUE;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String line;
+            int colNum = -1;
+            if ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                for (int i = 0; i < parts.length; i++) {
+                    if (parts[i].equalsIgnoreCase(colName)) {
+                        colNum = i;
+                        break;
+                    }
+                }
+            }
+
+            if (colNum == -1) return null;
+
+            long sum = 0;
+            List<Long> list = new ArrayList<>();
+            while ((line = br.readLine()) != null) {
+                if (line.equalsIgnoreCase("")) continue;
+                // use comma as separator
+                String[] parts = line.split(",");
+                long val = Long.parseLong(parts[colNum]);
+                list.add(val);
+                sum += val;
+            }
+
+            mean = sum / list.size();
+
+            for (long l : list) {
+                std += (l - mean) * (l - mean);
+                max = Math.max(max, l);
+                min = Math.min(min, l);
+            }
+            std = (long) Math.sqrt(std * 1.0 / list.size());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        long interval = Math.max(std, 1);
+
+        HierarchyBuilderIntervalBased<Long> numericGeneralizationBuilder = HierarchyBuilderIntervalBased.create(
+                DataType.INTEGER,
+                new Range<Long>(min, min, min),
+                new Range<Long>(max + 1, max + 1, max + 1));
+        numericGeneralizationBuilder.setAggregateFunction(DataType.INTEGER.createAggregate().createIntervalFunction(true, false));
+        numericGeneralizationBuilder.addInterval(min, min + interval);
+        numericGeneralizationBuilder.getLevel(0).addGroup(2);
+        numericGeneralizationBuilder.getLevel(1).addGroup(3);
+        return numericGeneralizationBuilder;
+    }
+
 }

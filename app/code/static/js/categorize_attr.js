@@ -11,7 +11,7 @@ $(document).ready(function() {
   
         for(var attr in attributes) {
             html += '<tr>\r\n';
-            html += '<td>' + attributes[attr] + '</td>\r\n<td><select class=\"form-control\" id=\"' + attributes[attr] + '\" style=\"width: 300px\">\r\n<option value=\"insensitive\">Sensitive</option>\r\n<option value=\"identifying\">Quasi-Identifier (general)</option>\r\n<option value=\"age\">Quasi-Identifier (age)</option>\r\n<option value=\"zip\">Quasi-identifier (zip)</option>\r\n</select></td>\r\n';
+            html += '<td>' + attributes[attr] + '</td>\r\n<td><select class=\"form-control\" id=\"' + attributes[attr] + '\" style=\"width: 300px\">\r\n<option value=\"insensitive\">Sensitive</option><option value=\"suppression\">Quasi-identifier (suppression)</option>\r\n\r\n<option value=\"numericgeneralization\">Quasi-Identifier (numeric-generalization)</option>\r\n</select></td>\r\n';
             html += '</tr>\r\n<br>';
         }
         html += '</tbody></form>';
@@ -31,8 +31,8 @@ function submit() {
     var identifyingAttr = [];
     var sensitiveAttr = [];
     var insensitiveAttr = [];
-    var age = [];
-    var zip = [];
+    var numericgeneralization = [];
+    var suppression = [];
     var klevel = document.getElementById("klevel").value;
     for (var attr in attributes) {
         var selection = document.getElementById(attributes[attr]).value;
@@ -49,20 +49,20 @@ function submit() {
             insensitiveAttr.push(attributes[attr]);
         }
 
-        if (selection == 'age') {
-            age.push(attributes[attr]);
+        if (selection == 'numericgeneralization') {
+            numericgeneralization.push(attributes[attr]);
         }
 
-        if (selection == 'zip') {
-            zip.push(attributes[attr]);
+        if (selection == 'suppression') {
+            suppression.push(attributes[attr]);
         }
     }
 
     attrCategorization["identifying"] = identifyingAttr;
     attrCategorization["sensitive"] = sensitiveAttr;
     attrCategorization["insensitive"] = insensitiveAttr;
-    attrCategorization["age"] = age;
-    attrCategorization["zip"] = zip;
+    attrCategorization["numericgeneralization"] = numericgeneralization;
+    attrCategorization["suppression"] = suppression;
     attrCategorization["k"] = klevel;
 
     $.getJSON($SCRIPT_ROOT + '/_categorization2python', {
