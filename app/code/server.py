@@ -71,11 +71,10 @@ def categorization2python():
 @app.route('/getkanonresult')
 def get_k_anon_result():
     global k_anon_res
-    # print attributes
     if k_anon_res:
         return k_anon_res
     else:
-        return "There might be something wrong!"
+        return "There was an error performing the anonymization. Please check your terminal for more details."
 
 
 @app.route('/_python2array')
