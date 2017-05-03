@@ -1,9 +1,11 @@
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.deidentifier.arx.ARXAnonymizer;
@@ -64,7 +66,8 @@ public class Anonymity {
 //        }
 
         DataHandle handle = result.getOutput(false);
-        handle.save(new File(args[2]), ',');
+        saveFile(result, args[2]);
+        //handle.save(new File(args[2]), ',');
 
         /*ARXConfiguration config = ARXConfiguration.create();
         config.addCriterion(new KAnonymity(5));
@@ -76,6 +79,25 @@ public class Anonymity {
         handle.save(new File("result.csv"), '\t');*/
     }
 
+    private static void saveFile(ARXResult result, String file) {
+        PrintWriter writer = new PrintWriter(file, "UTF-8");
+        Iterator<String[]> transformed = result.getOutput(false).iterator();
+        while (transformed.hasNext()) {
+            StringBuilder line = new StringBuilder();
+            for (String s : transformed.next()) {
+                StringBuilder sb = new StringBuilder();
+                if (s.endsWith("[")) {
+                    sb.append(s.substring(0, s.length() - 1))
+                      .append("]");
+                    s = sb.toString();
+                }
+                line.append(s)
+                    .append(",");
+            }
+            String record = line.toString().substring(0, line.toString().length() - 1);
+            writer.println();
+        }
+    }
     /**
      * parse the conf file, return k and set all the attr
      * @param data
