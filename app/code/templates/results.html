@@ -36,45 +36,47 @@
                         </ul> 
                     </div>
                     <div id="error-box"></div>
-                    <table id="statistic" class="table table-condensed"></table>
+                    <div class=container>
+                        <table id="statistic" class="table table-condensed"></table>
+                    </div>
                 </div>
             </div>
             <div class="panel panel-primary">
                 <div class="panel-heading">Query the original and anonymized datasets by entering a SQL query below.</div>
                 <div class="panel-body">
-                    <div class="form-group">
-                        <textarea placeholder="SELECT * FROM `db` LIMIT 10;" row="2" cols="60" class="form-control" id="userQuery"></textarea>
-                        <br>
-                        <button type="button" class="btn btn-primary" id="btnUserQuery">Submit Query</button>
-                        <br>
-                        <br>
-                        <label for="result1">Original Data:</label>
-                        <textarea placeholder="Original Data Results" row="2" cols="60" class="form-control" id="result1"></textarea>
-                        <label for="result2">Anonymized Data:</label>
-                        <textarea placeholder="Anonymized Data Results" row="2" cols="60" class="form-control" id="result2"></textarea>
+                    <div class="alert alert-info">
+                        <strong>Info:</strong><br>
+                        <ul>
+                            <li>`db1` queries the original dataset </li>
+                            <li>`db2` queries the anonymized dataset</li> 
+                            <li>`db` queries both datasets</li>
+                        </ul> 
+                    </div>
+                    <div class="container-fluid">
+                        <div class="form-group">
+                            <textarea row="2" cols="60" class="form-control" id="userQuery">SELECT * FROM `db` LIMIT 5;</textarea>
+                            <br>
+                            <button type="button" class="btn btn-outline-primary" id="btnUserQuery">Submit Query</button>
+                        </div>
+                    </div>
+                    <div id="error-box-query"></div>
+                    <div class="container">
+                        <div class="col-md-5">
+                            <label for="result1">Original Data:</label>
+                            <div class="div-query">
+                                <table id="result1" class="table table-striped"></table>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="result2">Anonymized Data:</label>
+                            <div class="div-query">
+                                <table id="result2" class="table table-striped"></table>
+                            </div>
+                        </div>
                     </div>
                 </div>
         </div>
-        <!--<div class="container">
-            <div class="jumbotron">
-                <h1>Summary</h1>
-                <p>These are the summary statistics for the anonymized dataset.</p>
-                <textarea readonly row="40" cols="120" style="resize:none" id="statistic"></textarea>
-                <h2>Query Database</h2>
-                <p> Enter SQL query below. <br>
-                    Example: SELECT * FROM `db` LIMIT 10;<br>
-                    "`db1`" stands for the original data, "`db2`" stands for the anonymized data.<br>
-                    "`db`" stands for query from both original and anonymized data.
-                </p>
-                <textarea placeholder="Enter SQL query to fetch results from the database" row="2" cols="60"
-                          id="userQuery"></textarea>
-                <button type="button" class="btn btn-primary" id="btnUserQuery">Submit Query</button>
-                <h4>Query Results</h4>
-                <textarea placeholder="Original Data Results" row="2" cols="60" id="result1"></textarea>
-
-                <textarea placeholder="Anonymized Data Results" row="2" cols="60" id="result2"></textarea>
-            </div>
-        </div>-->
+       
         <div id="navigation">
             <ul class="pager">
                 <li><a href="./anonymize.html">Back</a></li>

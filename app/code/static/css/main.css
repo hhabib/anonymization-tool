@@ -119,11 +119,20 @@ body {
 	margin-right: 20px;
 }
 
+.div-query {
+	overflow-x:auto;
+	border: 1px solid #4f4e4e;
+}
+
 a {
 	color: #38435c;
 }
 
 h1 {
+	color: #4f4e4e;
+}
+
+label {
 	color: #4f4e4e;
 }
 

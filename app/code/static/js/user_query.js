@@ -1,15 +1,14 @@
 $(document).ready(function() {
+    var attr;
+
     // Get the statistics from anonymization backend service
     var stats;
-
     $.ajax({
             url: '/getkanonresult',
             type: 'GET',
             success: function(data) {
                 // Print the statistics into a table
-                console.log(data);
                 var lines = data.split( "\n" );
-                console.log(lines.length);
                 if (lines.length == 1) {
                     var html = '<div class="alert alert-danger"><strong>Error! </strong>' + data + '</div>';
                      $('#error-box').html(html);
@@ -49,33 +48,60 @@ $(document).ready(function() {
     // The event listener for the user query
     document.getElementById('btnUserQuery').addEventListener('click', submitUserQuery, false);
     
-    // Method that reads and processes the selected file
+    // Method that processes the query and prints the results
     function submitUserQuery(evt) {
-
-        console.log($('#userQuery').val());
-        // var query = evt.target.$('#userQuery').val();
-        // var form = new FormData();
-        // form.append('query', query);
-
     	$.ajax({
             url: '/userQuery',
             type: 'POST',
-                // data: $('form').serialize(),
             data: {
                 'query': $('#userQuery').val()
             },
             success: function(data) {
-                console.log(data);
-                var json = JSON.parse(data)
+                var json = JSON.parse(data);
                 if ("db1" in json) {
-                    document.getElementById('result1').innerHTML = json.db1;
+                    // Print data into db1 table
+                    var html = '<tbody>\r\n';
+                    var org = json.db1;
+                    if(Array.isArray(org)) {
+                        for(var row in org) {                        
+                            html += '<tr>\r\n';
+                            for(var item in org[row]) {
+                                html += '<td>' + org[row][item] + '</td>\r\n';
+                            }
+                            html += '</tr>\r\n' ;
+                        }
+                        html += '</tbody>'
+                        $('#result1').html(html);
+                    } else {
+                        var html = '<div class="alert alert-danger"><strong>Error! </strong>' + org + '</div>';
+                        $('#error-box-query').html(html);  
+                    }
                 }
-                if ("db2" in json) {
-                    document.getElementById('result2').innerHTML = json.db2;
+                if ("db2" in json && json.db2.length > 1) {
+                    // Print data into db2 table
+                    var html = '<tbody>\r\n';
+                    var org = json.db2;
+
+                    if(Array.isArray(org)) {
+                        for(var row in org) {                        
+                            html += '<tr>\r\n';
+                            for(var item in org[row]) {
+                                html += '<td>' + org[row][item] + '</td>\r\n';
+                            }
+                            html += '</tr>\r\n' ;
+                        }
+                        html += '</tbody>'
+                        $('#result2').html(html);
+                    } else {
+                        var html = '<div class="alert alert-danger"><strong>Error! </strong>' + org + '</div>';
+                        $('#error-box-query').html(html);  
+                    }
                 }
             },
             error: function(error) {
                 console.log(error);
+                var html = '<div class="alert alert-danger"><strong>Error!</strong> There was an error performing the query.' + error + '</div>';
+                $('#error-box-query').html(html);  
             }
         });
     }
