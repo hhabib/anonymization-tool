@@ -124,6 +124,11 @@ body {
 	border: 1px solid #4f4e4e;
 }
 
+.btn-tutorial {
+	color: #38435c;
+	border-color: #38435c;
+}
+
 a {
 	color: #38435c;
 }

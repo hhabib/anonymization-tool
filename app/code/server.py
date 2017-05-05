@@ -108,6 +108,9 @@ def resultspage():
 def export():
     return render_template('export.html')
 
+@app.route('/tutorials.html')
+def tutorials():
+    return render_template('tutorials.html')
 
 @app.route('/download', methods=['GET'])
 def download():

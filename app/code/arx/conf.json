@@ -1,1 +1,1 @@
-{"age": ["Age"], "identifying": ["Sex", "Race"], "insensitive": ["Overdose"], "k": "3", "sensitive": [], "zip": ["Incident Zip"]}
+{"identifying": [], "insensitive": ["Age", "Sex", "Race", "Overdose", "Incident Zip"], "k": "1", "numericgeneralization": [], "sensitive": [], "suppression": []}
