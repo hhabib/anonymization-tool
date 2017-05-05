@@ -28,7 +28,10 @@
                 <div class="panel-heading">Specify whether each attribute is sensitive <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title='Attributes labeled as sensitive will remain as they were in the original dataset'></span> or a type of quasi-identifier <span class="glyphicon glyphicon-info-sign" data-toggle="tooltip" title='A quasi-idenfier is an attribute about the data subjects, like age or race, to which anonymization should be applied'></span> </div>
                 <div class="panel-body">
                     <div class="alert alert-info">
-                        <strong>Info:</strong> Quasi-identifiers that are ages should be numerical values in the dataset (e.g., 26). Those that are zip codes should be in five-digit format (e.g., 15213).
+                        <strong>Info:</strong> 
+                        <ul>
+                            <li>The quasi-identifier (suppression) option will remove characters of the attributes until the desired level of k is achieved. </li>
+                            <li>The quasi-identifier (numeric-generalization) option should be used for attributes that are numbers and the desired anonymization is a range of values. </li> 
                     </div>
                     <div class="form-group" id="attrList"></div>
                 </div>
