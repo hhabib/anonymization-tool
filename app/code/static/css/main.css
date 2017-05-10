@@ -129,6 +129,14 @@ body {
 	border-color: #38435c;
 }
 
+.jumbotron h1 {
+	color: #4f4e4e;
+}
+
+.media {
+	margin-bottom: 20px;
+}
+
 a {
 	color: #38435c;
 }
