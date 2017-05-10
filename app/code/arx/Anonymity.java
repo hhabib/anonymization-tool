@@ -222,9 +222,35 @@ public class Anonymity {
             System.out.println("   * " + identifiers[i] + ": " + generalizations[i]);
         }
         System.out.println(" - Statistics");
-        System.out.println(result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics());
+        printStatistic (result);
     }
 
+    private static void printStatistic (final ARXResult result) {
+        double average1 = result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics().getAverageEquivalenceClassSize();
+        double average2 = result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics().getAverageEquivalenceClassSizeIncludingOutliers();
+        double max1 = result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics().getMaximalEquivalenceClassSize();
+        double max2 = result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics().getMaximalEquivalenceClassSizeIncludingOutliers();
+        double min1 = result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics().getMinimalEquivalenceClassSize();
+        double min2 = result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics().getMinimalEquivalenceClassSizeIncludingOutliers();
+        int euq1 = result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics().getNumberOfEquivalenceClasses();
+        int euq2 = result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics().getNumberOfEquivalenceClassesIncludingOutliers();
+        int tuple = result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics().getNumberOfTuples();
+        int tuple1 = result.getOutput(result.getGlobalOptimum(), false).getStatistics().getEquivalenceClassStatistics().getNumberOfTuplesIncludingOutliers();
+        String a1 = String.format("%.3f", average1);
+        String a2 = String.format("%.3f", average2);
+        System.out.println("EquivalenceClassStatistics {");
+        System.out.println("- Average equivalence class size = " + a1);
+        System.out.println("- Average equivalence class size (including outliers) = " + a2);
+        System.out.println("- Maximal equivalence class size = " + max1);
+        System.out.println("- Maximal equivalence class size (including outliers) = " + max2);
+        System.out.println("- Minimal equivalence class size = " + min1);
+        System.out.println("- Minimal equivalence class size (including outliers) = " + min2);
+        System.out.println("- Number of equivalence classes = " + euq1);
+        System.out.println("- Number of equivalence classes (including outliers) = " + euq2);
+        System.out.println("- Number of tuples = " + tuple);
+        System.out.println("- Number of outlying tuples = " + tuple1);
+        System.out.println("}");
+    }
 
     private static HierarchyBuilderIntervalBased<Long> buildnumGenBuilder(String path, String colName)
             throws NumberFormatException {
